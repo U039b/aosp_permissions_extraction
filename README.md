@@ -3,7 +3,7 @@ This toy tool is meant to extract:
 * permission groups (name, icon, label, description)
 * permissions (name, label, description, group, protection level)
 
-from the ASOP sources and generate a JSON file containing information listed above in the locale you choose. 
+from the AOSP sources and generate a JSON file containing information listed above in the locale you choose. 
 
 This tool uses the [VectorDrawable2Svg script of Alessandro Lucchet](https://gitlab.com/Hyperion777/VectorDrawable2Svg) which has been lightly modified.
 
