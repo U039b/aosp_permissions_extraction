@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-from xml.dom.minidom import *
-import os
 import json
-from vd2svg import *
+import os
+
+from aosp_permissions_extraction.vd2svg import *
 
 
 def extract_permissions(aosp_root_dir):
@@ -30,7 +30,7 @@ def extract_permissions(aosp_root_dir):
             permissions[name]['description_ptr'] = p.attributes['android:description'].value.replace('@string/', '')
         if p.hasAttribute('android:permissionGroup'):
             permissions[name]['permission_group'] = p.attributes['android:permissionGroup'].value
-            
+
     return permissions
 
 
@@ -58,14 +58,15 @@ def extract_permission_groups(aosp_root_dir):
             groups[name]['description_ptr'] = g.attributes['android:description'].value.replace('@string/', '')
         if g.hasAttribute('android:icon'):
             groups[name]['icon_ptr'] = g.attributes['android:icon'].value.replace('@drawable/', '')
-    
+
     return groups
 
 
 def extract_drawable(aosp_root_dir, elements):
     for e in elements:
         if 'icon_ptr' in elements[e]:
-            drawable_file = os.path.join(aosp_root_dir, 'core/res/res/drawable/', '{}.xml'.format(elements[e]['icon_ptr']))
+            drawable_file = os.path.join(aosp_root_dir, 'core/res/res/drawable/',
+                                         '{}.xml'.format(elements[e]['icon_ptr']))
             if os.path.isfile(drawable_file):
                 svg = convertVd(drawable_file)
                 elements[e]['icon'] = svg
@@ -120,8 +121,10 @@ def gen_html(elements, file_name):
             h.write('</div>\n')
         h.write('</html>\n')
 
+
 if __name__ == "__main__":
     import sys
+
     if len(sys.argv) != 4:
         print('python extract.py <AOSP root dir> <2-letter locale> <output dir>')
         sys.exit(1)

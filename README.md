@@ -20,7 +20,8 @@ rm -rf  Android.bp Android.mk apct-tests api CleanSpec.mk cmds config data docs 
 
 ## Usage
 ```
-python extract.py [path to AOSP folder] [2-letter locale] [destination folder]
+pip install git+https://github.com/U039b/aosp_permissions_extraction.git
+python extract_required_permissions.py [path to AOSP folder] [2-letter locale] [destination folder]
 ```
 the destination folder will be automatically created.
 
