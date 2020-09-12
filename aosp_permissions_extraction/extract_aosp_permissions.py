@@ -62,6 +62,9 @@ def extract_permission_groups(aosp_root_dir):
             groups[name]['description'] = "This is not a defined permission group"
         if g.hasAttribute('android:icon'):
             groups[name]['icon_ptr'] = g.attributes['android:icon'].value.replace('@drawable/', '')
+        else:
+            groups[name]['icon'] = """<?xml version=\"1.0\" ?><svg xmlns=\"http://www.w3.org/2000/svg\" 
+                                        width=\"24\" height=\"24\" viewBox=\"0 0 24 24\"></svg>"""
 
     return groups
 
@@ -104,18 +107,18 @@ def gen_html(elements, file_name):
         h.write('<html>\n')
         h.write('<style>body{font-family: monospace;}</style>\n')
         h.write('<h1>Permissions groups</h1>\n')
-        for g in groups:
+        for g in sorted(groups.keys()):
             h.write('<div>\n')
-            h.write('{}\n'.format(groups[g]['icon']))
+            h.write('{} <b><font size="5">{}</font></b>\n'.format(groups[g]['icon'],groups[g]['name']))
             h.write('<ul>\n')
             h.write('<li>Label: {}</li>\n'.format(groups[g]['label']))
             h.write('<li>Description: {}</li>\n'.format(groups[g]['description']))
             h.write('</ul>\n')
             h.write('</div>\n')
         h.write('<h1>Permissions</h1>\n')
-        for g in permissions:
+        for g in sorted(permissions.keys()):
             h.write('<div>\n')
-            h.write('<h2>{}</h2>\n'.format(permissions[g]['name']))
+            h.write('<b><font size="5">{}</font></b>\n'.format(permissions[g]['name']))
             h.write('<ul>\n')
             h.write('<li>Label: {}</li>\n'.format(permissions[g]['label']))
             h.write('<li>Description: {}</li>\n'.format(permissions[g]['description']))
