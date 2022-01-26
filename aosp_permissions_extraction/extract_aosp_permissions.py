@@ -44,7 +44,7 @@ def extract_permission_groups(aosp_root_dir):
         name = str(g.attributes['android:name'].value)
         groups[name] = {
             'name': name,
-            'request_ptr': str(g.attributes['android:request'].value.replace('@string/', '')),
+            # 'request_ptr': str(g.attributes['android:request'].value.replace('@string/', '')),
             'description': '',
             'description_ptr': '',
             'label': '',
